@@ -5,35 +5,22 @@ public class HCF {
         Scanner sc = new Scanner(System.in);
         int a = sc.nextInt();
         int b = sc.nextInt();
-        if(a>b){
-            int c = a/b;
-            int d = a%b;
-           while(d!=0){
-              a=b;
-              b=d;
-              c = a/b;
-              d = a%b;
-              
-           }
-           System.out.print(b);
-          
-        }else{
-            int n;
-            n=a;
+
+        if(a<b){
+            int n=a;
             a=b;
             b=n;
-            int c = a/b;
-            int d = a%b;
-           while(d!=0){
-              a=b;
-              b=d;
-              c = a/b;
-              d = a%b;
-             
-           }
-           System.out.print(b);
-           
         }
+
+        while(a%b!=0){
+            int rem=a%b;
+            a=b;
+            b=rem;
+            
+         }
+         System.out.print(b);
+
+        
     }
     
 }
