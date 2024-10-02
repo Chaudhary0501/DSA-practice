@@ -12,6 +12,10 @@ public class rotate {
         int k = sc.nextInt();
         
         rotate_array(arr,k);
+        
+        for(int i=0;i<arr.length;i++){
+            System.out.print(arr[i]+" ");
+        }
     }
  
     public static void rotate_array(int arr[], int k){
@@ -20,9 +24,7 @@ public class rotate {
         reverse(arr,0,arr.length-k-1);
         reverse(arr,0,arr.length-1);
         
-        for(int i=0;i<arr.length;i++){
-            System.out.print(arr[i]+" ");
-        }
+       
     }
 
     public static void reverse(int arr[],int i, int j){
