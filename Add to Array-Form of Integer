@@ -1,0 +1,21 @@
+class Solution {
+    public List<Integer> addToArrayForm(int[] num, int k) {
+        ArrayList<Integer> result = new ArrayList<>();
+        int i = num.length - 1;
+    
+        // Process from right to left
+        while (i >= 0 || k > 0) {
+            if (i >= 0) {
+                k += num[i];  // Add num[i] to k
+                i--;
+        }
+        
+        result.add(k % 10);  // Store the last digit
+        k /= 10;  // Remove last digit (carry over)
+    }
+
+    // Reverse once at the end for correct order
+    Collections.reverse(result);
+    return result;
+    }
+}
