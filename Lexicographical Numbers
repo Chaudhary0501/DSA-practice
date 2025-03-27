@@ -1,0 +1,20 @@
+class Solution {
+    public List<Integer> lexicalOrder(int n) {
+        ArrayList<Integer> ll = new ArrayList<>();
+        printCounting(1, n, ll);
+        return ll;
+    }
+
+    public static void printCounting(int curr, int n, ArrayList<Integer> ll){
+        if(curr > n){
+            return;
+        }
+        ll.add(curr);
+        for (int i = 0; i <= 9; i++) {
+            printCounting(curr * 10 + i, n, ll);
+        }
+        if (curr < 9) { 
+            printCounting(curr + 1, n, ll);
+        }
+    }
+}
