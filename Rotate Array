@@ -1,0 +1,23 @@
+class Solution {
+    public void rotate(int[] nums, int k) {
+        rotate_array(nums, k);
+    }
+
+    public static void rotate_array(int arr[], int k){
+        k=k%arr.length;
+        reverse(arr,arr.length-k,arr.length-1);
+        reverse(arr,0,arr.length-k-1);
+        reverse(arr,0,arr.length-1);
+    }
+
+    public static void reverse(int arr[],int i, int j){
+        int m = (i+j)/2;
+        while(i<=m){
+            int temp = arr[j];
+            arr[j]=arr[i];
+            arr[i]=temp;
+            i++;
+            j--;
+        }
+    }
+}
