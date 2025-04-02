@@ -1,0 +1,23 @@
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        int sum = 0;
+        List<Integer> ll = new ArrayList<>();
+        List<List<Integer>> ans = new ArrayList<>();
+        combination(k, n, sum, ll, ans, 1); 
+        return ans;
+    }
+
+    public static void combination(int k, int n, int sum, List<Integer> ll, List<List<Integer>> ans, int idx){
+        if(n==sum && k==0){
+            ans.add(new ArrayList<Integer>(ll));
+            return;
+        }
+        for(int i = idx; i <= 9; i++){
+            if(n>sum && k>0){
+                ll.add(i);
+                combination(k-1, n, sum+i, ll, ans, i+1);
+                ll.remove(ll.size()-1);
+            }
+        }
+    }
+}
