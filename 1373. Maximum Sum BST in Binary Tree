@@ -1,0 +1,30 @@
+class Solution {
+    public int maxSumBST(TreeNode root) {
+        return validBST(root).ans;
+    }
+    public BSTpair validBST(TreeNode root) {
+        if(root == null){
+            return new BSTpair();
+        }
+        BSTpair leftBSTpair = validBST(root.left);
+        BSTpair rightBSTpair = validBST(root.right);
+        BSTpair selfBSTpair = new BSTpair();
+        selfBSTpair.min = Math.min(root.val, Math.min(leftBSTpair.min, rightBSTpair.min));
+        selfBSTpair.max = Math.max(root.val, Math.max(leftBSTpair.max, rightBSTpair.max));
+        selfBSTpair.isBST = leftBSTpair.isBST && rightBSTpair.isBST && root.val > leftBSTpair.max && root.val < rightBSTpair.min;
+        selfBSTpair.sum = leftBSTpair.sum + rightBSTpair.sum + root.val;
+        if(selfBSTpair.isBST){
+            selfBSTpair.ans = Math.max(selfBSTpair.sum, Math.max(leftBSTpair.ans, rightBSTpair.ans));
+        }else{
+            selfBSTpair.ans = Math.max(leftBSTpair.ans, rightBSTpair.ans);
+        }
+        return selfBSTpair; 
+    }
+}
+class BSTpair {
+    boolean isBST = true;
+    long min = Long.MAX_VALUE;
+    long max = Long.MIN_VALUE;
+    int sum = 0;
+    int ans = 0;
+}
