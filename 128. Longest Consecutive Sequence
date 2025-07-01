@@ -1,0 +1,53 @@
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        // TreeSet<Integer> set = new TreeSet<>();
+        // for( int i = 0; i < nums.length; i++){
+        //     set.add(nums[i]);
+        // }
+        // ArrayList<Integer> ll = new ArrayList<>(set);
+        // int count = 1;
+        // int max = 1;
+        // if(ll.size()==0){
+        //     return 0;
+        // }else if(ll.size()==1){
+        //     return count;
+        // }
+        // for(int i = 1; i < ll.size(); i++){
+        //     if((ll.get(i) - ll.get(i - 1)) == 1){
+        //         count++;
+        //         max = Math.max(max, count);
+        //     }else{
+        //         count = 1;
+        //     }
+        // }
+        // return max;
+        //-----------------------------------------------------------------------------------
+
+        //to be in hashmap, check before adding if (num-1) exists, if not (num = true) else false.
+        //after adding, check if (num+1) exists, and make it false if true.
+
+        HashMap<Integer, Boolean> map = new HashMap<>();
+        for(int i = 0; i < nums.length; i++){
+            if(map.containsKey(nums[i]-1)){
+                map.put(nums[i], false);
+            }else{
+                map.put(nums[i], true);
+            }
+            if(map.containsKey(nums[i]+1)){
+                map.put(nums[i]+1, false);
+            }
+        }
+        int ans = 0;
+        for(int key : map.keySet()){
+            if(map.get(key)){
+                int count = 0;
+                while(map.containsKey(key)){      //O(n) as while loop runs only once for any element.
+                    count++;
+                    key++;
+                }
+                ans = Math.max(ans, count);
+            }
+        }
+        return ans;
+    }
+}
