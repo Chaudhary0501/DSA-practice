@@ -1,7 +1,7 @@
 class Solution {
     public boolean isAnagram(String s, String t) {
         // if(s.length()!=t.length()){
-        //     return false;
+        //     return false;                                        //O(n^2)
         // }
         // char[] str1 = s.toCharArray();
         // char[] str2 = t.toCharArray();
@@ -24,9 +24,24 @@ class Solution {
         //     }
         // }
         // return true;
+        //-------------------------------------------------------------------------------------
 
+        // if(s.length() != t.length()){
+        //     return false;                                           //O(nlogn)
+        // }
+        // char[] str1 = s.toCharArray();
+        // char[] str2 = t.toCharArray();
+        // Arrays.sort(str1);
+        // Arrays.sort(str2);
+        // s = new String(str1);
+        // t = new String(str2);
+        // if(s.equals(t)){
+        //     return true;
+        // }
+        // return false;
+        //----------------------------------------------------------------------------------------
         if(s.length() != t.length()){
-            return false;
+            return false;                                          //O(n)
         }
         char[] str1 = s.toCharArray();
         char[] str2 = t.toCharArray();
@@ -48,5 +63,7 @@ class Solution {
             }
         }
         return true;
+
+        
     }
 }
