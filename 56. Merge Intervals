@@ -1,0 +1,45 @@
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        if (intervals == null || intervals.length == 0) {
+            return new int[0][];
+        }
+
+        ArrayList<Integer> ll = new ArrayList<>();
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+
+        int i = 1;
+        while (i < intervals.length) {
+            if (intervals[i][0] <= end) {
+                // Overlap: extend the end
+                end = Math.max(end, intervals[i][1]);
+            } else {
+                // No overlap: add previous merged interval and reset start/end
+                ll.add(start);
+                ll.add(end);
+                start = intervals[i][0];
+                end = intervals[i][1];
+            }
+            i++;
+        }
+
+        // Add the last interval
+        ll.add(start);
+        ll.add(end);
+
+        int[][] ans = new int[ll.size() / 2][2];
+        int m = 0;
+        int n = 0;
+        for (int j = 0; j < ll.size(); j++) {
+            n = n % 2;
+            ans[m][n] = ll.get(j);
+            if (n == 1) {
+                m++;
+            }
+            n++;
+        }
+        return ans;
+    }
+}
