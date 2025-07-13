@@ -1,0 +1,30 @@
+class Solution {
+    public int rob(int[] nums) {
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, -1);
+        return robbery(nums, 0, dp);
+    }
+
+    //-------------BRUTE FORCE--------GIVES TLE-------------------------------------
+
+    // public int robbery(int[] nums, int i){
+    //     if(i >= nums.length){
+    //         return 0;
+    //     }
+    //     int rob = nums[i] + robbery(nums, i + 2);
+    //     int Dn_rob = robbery(nums, i + 1);
+    //     return Math.max(rob, Dn_rob);
+    // }
+
+    public int robbery(int[] nums, int i, int[] dp){
+        if(i >= nums.length){
+            return 0;
+        }
+        if(dp[i] != -1){
+            return dp[i];
+        }
+        int rob = nums[i] + robbery(nums, i + 2, dp);      //dp[i + 2]
+        int Dn_rob = robbery(nums, i + 1, dp);           //dp[i + 1];
+        return dp[i] = Math.max(rob, Dn_rob);          //dp[i]
+    }
+}
