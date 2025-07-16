@@ -28,8 +28,8 @@ class Solution {
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 class Solution {
-    public int longestCommonSubsequence(String text1, String text2) {
-        return LCS(text1, text2, 0, 0, dp);
+    public int longestCommonSubsequence(String text1, String text2) {                  // Back Recursion
+        return LCS(text1, text2, text1.length() - 1, text2.length() - 1, dp);
     }
     public static int LCS(String s1, String s2, int i, int j, int[][] dp){
         if(i == s1.length() || j == s2.length()){
@@ -40,10 +40,10 @@ class Solution {
         }
         int ans = 0;
         if(s1.charAt(i) == s2.charAt(j)){
-            ans = 1 + LCS(s1, s2, i + 1, j + 1, dp);
+            ans = 1 + LCS(s1, s2, i - 1, j - 1, dp);           //dp[i-1][j-1]
         }else{
-            int a = LCS(s1, s2, i + 1, j, dp);
-            int b = LCS(s1, s2, i, j + 1, dp);
+            int a = LCS(s1, s2, i - 1, j, dp);                //dp[i-1][j]
+            int b = LCS(s1, s2, i, j - 1, dp);                //dp[i][j-1]
             ans = Math.max(a, b);
         }
         return dp[i][j] = ans;
