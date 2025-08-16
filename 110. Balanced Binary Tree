@@ -1,0 +1,64 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+ -------------------------------------------------------------O(n^2)
+ 
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        return Balanced(root);
+    }
+    public boolean Balanced(TreeNode root){
+        if(root == null){
+            return true;
+        }
+        boolean left = Balanced(root.left);
+        boolean right = Balanced(root.right);
+        boolean sb = Math.abs(ht(root.left) - ht(root.right)) <= 1;
+        return left && right && sb;
+    }
+    public int ht(TreeNode root){
+        if(root == null){
+            return -1;
+        }
+        int left = ht(root.left);
+        int right = ht(root.right);
+        return Math.max(left, right) + 1;
+    }
+}
+
+----------------------------------------------------------------------O(n)
+
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        return Balanced(root).isBal;
+    }
+    public BalancePair Balanced(TreeNode root){
+        if(root == null){
+            return new BalancePair();
+        }
+        BalancePair lbp = Balanced(root.left);
+        BalancePair rbp = Balanced(root.right);
+        BalancePair sbp = new BalancePair();
+        sbp.ht = Math.max(lbp.ht, rbp.ht) + 1;
+        boolean sb = Math.abs(lbp.ht - rbp.ht) <= 1;
+        sbp.isBal = lbp.isBal && rbp.isBal && sb;
+        return sbp;
+    }
+    class BalancePair{
+        boolean isBal = true;
+        int ht = -1;
+    }
+}
