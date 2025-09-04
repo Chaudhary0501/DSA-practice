@@ -1,0 +1,85 @@
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+
+        // BRUTE FORCE : HashMap + Sorting---------------------------------------------------
+        // O(nlogn)
+        // HashMap<Integer, Integer> map = new HashMap<>();
+        // for (int num : nums) {
+        //     if(!map.containsKey(num)){
+        //         map.put(num, 1);
+        //     }else{
+        //         map.put(num, map.get(num) + 1);
+        //     }
+        // }
+        // List<Map.Entry<Integer, Integer>> ll = new ArrayList<>(map.entrySet());
+        // ll.sort((a, b) -> b.getValue() - a.getValue());  // descending order
+
+        // int[] result = new int[k];
+        // for (int i = 0; i < k; i++) {
+        //     result[i] = ll.get(i).getKey();
+        // }
+        // return result;
+
+
+        // HEAP -------------------------------------------------------------------------------------
+        // O(nlogk)
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            if(!map.containsKey(num)){
+                map.put(num, 1);
+            }else{
+                map.put(num, map.get(num) + 1);
+            }
+        }
+        PriorityQueue<Map.Entry<Integer, Integer>> minHeap =
+            new PriorityQueue<>((a, b) -> a.getValue() - b.getValue());
+
+        // Push into heap
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            minHeap.offer(entry);      // entires in heap on min priority
+            if (minHeap.size() > k) {
+                minHeap.poll();    // remove smallest frequency
+            }
+        }
+
+        int[] result = new int[k];
+        int i = 0;
+        while (!minHeap.isEmpty()) {
+            result[i++] = minHeap.poll().getKey();
+        }
+        return result;
+
+       
+        // BUCKET SORT -----------------------------------------------------------------------------
+        // O(n)
+        // Map<Integer, Integer> freqMap = new HashMap<>();
+        // for (int num : nums) {
+        //     freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
+        // }
+
+        // // Step 2: Create buckets (frequency -> list of numbers)
+        // List<Integer>[] buckets = new List[nums.length + 1];
+        // for (int key : freqMap.keySet()) {
+        //     int freq = freqMap.get(key);
+        //     if (buckets[freq] == null) {
+        //         buckets[freq] = new ArrayList<>();
+        //     }
+        //     buckets[freq].add(key);
+        // }
+
+        // // Step 3: Collect top k frequent elements
+        // List<Integer> resultList = new ArrayList<>();
+        // for (int i = buckets.length - 1; i >= 0 && resultList.size() < k; i--) {
+        //     if (buckets[i] != null) {
+        //         resultList.addAll(buckets[i]);
+        //     }
+        // }
+
+        // // Convert to array
+        // int[] result = new int[k];
+        // for (int i = 0; i < k; i++) {
+        //     result[i] = resultList.get(i);
+        // }
+        // return result;
+    }
+}
