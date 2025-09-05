@@ -23,33 +23,35 @@ class Solution {
 
         // HEAP -------------------------------------------------------------------------------------
         // O(nlogk)
-        Map<Integer, Integer> map = new HashMap<>();
+        // Step 1: Count frequencies
+        Map<Integer, Integer> freq = new HashMap<>();
         for (int num : nums) {
-            if(!map.containsKey(num)){
-                map.put(num, 1);
-            }else{
-                map.put(num, map.get(num) + 1);
-            }
+            freq.put(num, freq.getOrDefault(num, 0) + 1);
         }
-        PriorityQueue<Map.Entry<Integer, Integer>> minHeap =
-            new PriorityQueue<>((a, b) -> a.getValue() - b.getValue());
 
-        // Push into heap
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            minHeap.offer(entry);      // entires in heap on min priority
+        // Step 2: Min-Heap of size k (compare by frequency)
+        PriorityQueue<int[]> minHeap = new PriorityQueue<>(
+            new Comparator<int[]>() {
+                public int compare(int[] a, int[] b) {
+                    return a[1] - b[1];  // sort by frequency ascending
+                }
+            }
+        );
+
+        for (int key : freq.keySet()) {
+            minHeap.add(new int[]{key, freq.get(key)});
             if (minHeap.size() > k) {
-                minHeap.poll();    // remove smallest frequency
+                minHeap.poll(); // remove lowest frequency
             }
         }
 
+        // Step 3: Extract result
         int[] result = new int[k];
         int i = 0;
         while (!minHeap.isEmpty()) {
-            result[i++] = minHeap.poll().getKey();
+            result[i++] = minHeap.poll()[0];
         }
         return result;
-
-       
         // BUCKET SORT -----------------------------------------------------------------------------
         // O(n)
         // Map<Integer, Integer> freqMap = new HashMap<>();
