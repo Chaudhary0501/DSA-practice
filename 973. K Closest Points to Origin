@@ -1,0 +1,54 @@
+class Solution {
+    public int[][] kClosest(int[][] points, int k) {
+
+        // // BRUTE FORCE : ARRAY -----------------------------------------------------------------------
+        // // O(nk)
+        // int n = points.length;
+        // int[] dist = new int[n];
+        // for(int i = 0; i < dist.length; i++){
+        //     dist[i] = (int)(Math.pow(points[i][0], 2) + Math.pow(points[i][1], 2));
+        // }
+        // int[][] arr = new int[k][2];
+        // int j = 0;
+        // while(k > 0){
+        //     int min = Integer.MAX_VALUE;
+        //     int idx = -1;
+        //     for(int i = 0; i < n; i++){
+        //         if(dist[i] < min){
+        //             min = dist[i];
+        //             idx = i;
+        //         }
+        //     }
+        //     arr[j][0] = points[idx][0];
+        //     arr[j][1] = points[idx][1];
+        //     dist[idx] = Integer.MAX_VALUE;
+        //     k--;
+        //     j++;
+        // }
+        // return arr;
+
+
+        // HEAP ------------------------------------------------------------------------------------------
+        // O(n log k)
+        PriorityQueue<int[]> maxHeap = new PriorityQueue<>(new Comparator<int[]>() {
+            public int compare(int[] a, int[] b) {
+                int distA = a[0] * a[0] + a[1] * a[1];
+                int distB = b[0] * b[0] + b[1] * b[1];
+                return distB - distA;  // reverse order (max heap)
+            }
+        });
+
+        for (int[] p : points) {
+            maxHeap.add(p);
+            if (maxHeap.size() > k) {
+                maxHeap.poll(); // remove farthest point
+            }
+        }
+
+        int[][] result = new int[k][2];
+        for (int i = 0; i < k; i++) {
+            result[i] = maxHeap.poll();
+        }
+        return result;
+    }
+}
