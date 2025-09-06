@@ -1,0 +1,59 @@
+class Solution {
+    public int maxSubarraySumCircular(int[] nums) {
+
+        // // BRUTE FORCE ----------------------------------------------------------------------------------
+        // // TIME : O(n^2) && SPACE : O(n)
+        // int n = nums.length;
+        // int[] arr = new int[2 * n];
+        // for (int i = 0; i < n; i++) {
+        //     arr[i] = nums[i];
+        //     arr[i + n] = nums[i];
+        // }
+        // int maxSum = nums[0];
+        // for (int i = 0; i < n; i++) {      
+        //     int sum = 0;
+        //     for (int j = i; j < i + n; j++) { 
+        //         sum += arr[j];
+        //         maxSum = Math.max(maxSum, sum);
+        //     }
+        // }
+        // return maxSum;
+
+        // // BRUTE FORCE ---------------------------------------------------------------------------------0
+        // // TIME : O(n^2) && SPACE : O(1)
+        // int n = nums.length;
+        // int ans = Integer.MIN_VALUE;
+        // for (int i = 0; i < n; i++) {
+        //     int sum = 0;
+        //     for (int len = 0; len < n; len++) {
+        //         int j = (i + len) % n;  
+        //         sum += nums[j];
+        //         ans = Math.max(ans, sum);
+        //     }
+        // }
+        // return ans;
+
+        // OPTIMIZED
+        // TIME : O(n) && SPACE : O(1)
+        int totalSum = 0;
+        int currMax = 0, maxSum = nums[0];
+        int currMin = 0, minSum = nums[0];
+
+        for (int num : nums) {
+            totalSum += num;
+
+            currMax = Math.max(num, currMax + num);
+            maxSum = Math.max(maxSum, currMax);
+
+            currMin = Math.min(num, currMin + num);
+            minSum = Math.min(minSum, currMin);
+        }
+
+        if (maxSum < 0) {
+            return maxSum;
+        }
+
+        return Math.max(maxSum, totalSum - minSum);
+
+    }
+}
